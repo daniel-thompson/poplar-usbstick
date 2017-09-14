@@ -87,6 +87,8 @@ poplar-boot.fat32 : Makefile
 	guestfish sparse poplar-boot.fat32 128M
 	mkfs.vfat -F 32 -n BOOT poplar-boot.fat32
 
+poplar-overlay.tar.gz :
+	$(RM) -r overlay/lib/modules
 	$(MAKE) -C poplar-linux ARCH=arm64 CROSS_COMPILE="${CROSS_64}" \
 		modules_install INSTALL_MOD_PATH=${PWD}/overlay
 	tar --group 0 --owner 0 -C overlay -czf poplar-overlay.tar.gz .

@@ -7,7 +7,7 @@ In order to manage expectations, it is not a polished product and the
 provided kernel has a limited feature set.
 
 Nevertheless it provides a good basis for kernel development; self
-compiled kernels can easily be added to the boot image and u-boot can 
+compiled kernels can easily be added to the boot image and u-boot can
 be configured to provide a menu to choose between a development and
 fallback kernel.
 
@@ -44,8 +44,9 @@ Booting the install media
 Installation
 ------------
 
-1. At the root prompt run ./install.sh and follow the on-screen prompts
-2. Make a cup of tea or coffee; the root filesystem consists of almost 
+1. At the root prompt run ./install-debian.sh and follow the on-screen
+   prompts
+2. Make a cup of tea or coffee; the root filesystem consists of almost
    40,000 files and takes a long time to unpack.
 
 Installing a second kernel

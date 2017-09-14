@@ -75,7 +75,7 @@ build_linux :
 	$(MAKE) -C poplar-linux ARCH=arm64 CROSS_COMPILE="${CROSS_64}" \
 		defconfig
 	$(MAKE) -C poplar-linux ARCH=arm64 CROSS_COMPILE="${CROSS_64}" \
-		all -j $(nproc)
+		all -j $(shell nproc)
 
 generate_image : poplar-boot.fat32 poplar-overlay.tar.gz
 	guestfish -f genimage.fish

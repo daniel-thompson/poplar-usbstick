@@ -10,5 +10,5 @@ Quickstart
 
 Just type `make`.
 
-See overlay/root/README.md for instructions on how to use the resulting
-image.
+See [installer README](overlay/root/README.md) for instructions on how
+to use the resulting image.

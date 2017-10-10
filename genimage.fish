@@ -30,7 +30,8 @@ mount /dev/sda1 /boot
 mkdir-p /boot/extlinux
 copy-in poplar-l-loader/fastboot.bin /boot
 copy-in poplar-linux/arch/arm64/boot/Image /boot
-copy-in poplar-linux/arch/arm64/boot/dts/hisilicon/hi3798cv200-poplar.dtb /boot
+mkdir-p /boot/hisilicon
+copy-in poplar-linux/arch/arm64/boot/dts/hisilicon/hi3798cv200-poplar.dtb /boot/hisilicon
 
 # Apply the overlay
 tar-in poplar-overlay.tar.gz / compress:gzip

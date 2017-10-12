@@ -47,7 +47,7 @@ poplar-u-boot :
 poplar-linux :
 	git clone https://github.com/linaro/poplar-linux.git -b jiancheng-usb2-test
 
-CROSS_32=arm-linux-gnueabi-
+CROSS_32=arm-linux-gnueabihf-
 CROSS_64=aarch64-linux-gnu-
 
 # Step 1: Build U-Boot.

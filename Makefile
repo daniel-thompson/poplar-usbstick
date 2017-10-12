@@ -45,7 +45,7 @@ poplar-arm-trusted-firmware :
 poplar-u-boot :
 	git clone https://github.com/linaro/poplar-u-boot.git -b latest
 poplar-linux :
-	git clone https://github.com/linaro/poplar-linux.git -b jiancheng-usb2-test
+	git clone https://github.com/linaro/poplar-linux.git -b latest
 
 CROSS_32=arm-linux-gnueabihf-
 CROSS_64=aarch64-linux-gnu-
@@ -73,7 +73,8 @@ build_l_loader : build_armtf
 # Step 4: Build Linux.
 build_linux :
 	$(MAKE) -C poplar-linux ARCH=arm64 CROSS_COMPILE="${CROSS_64}" \
-		defconfig
+		poplar_defconfig
+	(cd poplar-linux; scripts/config --disable ANDROID_PARANOID_NETWORK)
 	$(MAKE) -C poplar-linux ARCH=arm64 CROSS_COMPILE="${CROSS_64}" \
 		all -j $(shell nproc)
 

@@ -17,24 +17,24 @@ dpkg -i extra-packages/*.deb
 print " done\n"
 
 print "Installing bootloader .."
-dd if=/boot/fastboot.bin of=/dev/mmcblk0
-sfdisk /dev/mmcblk0 <<EOF
+dd if=/boot/fastboot.bin of=/dev/mmcblk1
+sfdisk /dev/mmcblk1 <<EOF
 label: dos
-device: /dev/mmcblk0
+device: /dev/mmcblk1
 unit: sectors
 
-/dev/mmcblk0p1 : start=           1, size=        8191, type=f0
-/dev/mmcblk0p2 : start=        8192, size=      279336, type=c, bootable
-/dev/mmcblk0p3 : start=      288768, size=    14981120, type=83
+/dev/mmcblk1p1 : start=           1, size=        8191, type=f0
+/dev/mmcblk1p2 : start=        8192, size=      279336, type=c, bootable
+/dev/mmcblk1p3 : start=      288768, size=    14981120, type=83
 EOF
 print .
 sleep 3				# Allow time to update nodes in /dev
 print " done\n"
 
 print "Creating rootfs (this may take a long time) ..."
-mkfs.ext4 -q -L rootfs /dev/mmcblk0p3
+mkfs.ext4 -q -L rootfs /dev/mmcblk1p3
 mkdir -p /sysimage
-mount /dev/mmcblk0p3 /sysimage
+mount /dev/mmcblk1p3 /sysimage
 print " done\n"
 
 # Unpack the rootfs (with progress meter)
@@ -45,9 +45,9 @@ mv binary/* .
 rmdir binary
 
 print "Creating boot image .."
-mkfs.vfat -F 32 -n boot /dev/mmcblk0p2
+mkfs.vfat -F 32 -n boot /dev/mmcblk1p2
 mkdir -p /sysimage/boot
-mount /dev/mmcblk0p2 /sysimage/boot
+mount /dev/mmcblk1p2 /sysimage/boot
 print .
 print " done\n"
 

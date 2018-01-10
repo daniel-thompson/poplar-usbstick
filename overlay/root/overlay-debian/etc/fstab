@@ -1,2 +1,2 @@
-/dev/mmcblk0p3		/			ext4		defaults
-/dev/mmcblk0p2		/boot			vfat		defaults
+/dev/mmcblk1p3		/			ext4		defaults
+/dev/mmcblk1p2		/boot			vfat		defaults

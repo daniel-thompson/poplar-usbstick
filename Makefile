@@ -39,9 +39,9 @@ clone : poplar-l-loader poplar-arm-trusted-firmware poplar-u-boot poplar-linux
 poplar-tools :
 	git clone https://github.com/96boards-poplar/poplar-tools.git
 poplar-l-loader :
-	git clone https://github.com/linaro/poplar-l-loader.git -b latest
+	git clone https://github.com/96boards-poplar/l-loader.git -b u-boot poplar-l-loader
 poplar-arm-trusted-firmware :
-	git clone https://github.com/ARM-software/arm-trusted-firmware poplar-arm-trusted-firmware
+	git clone https://github.com/96boards-poplar/arm-trusted-firmware
 poplar-u-boot :
 	git clone https://github.com/96boards-poplar/u-boot.git poplar-u-boot
 poplar-linux :
@@ -58,15 +58,15 @@ build_uboot :
 
 # Step 2: Build ARM Trusted Firmware components.
 build_armtf : build_uboot
-	$(MAKE) -C poplar-arm-trusted-firmware distclean
-	$(MAKE) -C poplar-arm-trusted-firmware \
+	$(MAKE) -C arm-trusted-firmware distclean
+	$(MAKE) -C arm-trusted-firmware \
 		CROSS_COMPILE=${CROSS_64} all fip DEBUG=1 PLAT=poplar SPD=none \
 		BL33=${PWD}/poplar-u-boot/u-boot.bin
 
 # Step 3: Build "l-loader"
 build_l_loader : build_armtf
-	cp poplar-arm-trusted-firmware/build/poplar/debug/bl1.bin poplar-l-loader/atf/
-	cp poplar-arm-trusted-firmware/build/poplar/debug/fip.bin poplar-l-loader/atf/
+	cp arm-trusted-firmware/build/poplar/debug/bl1.bin poplar-l-loader/atf/
+	cp arm-trusted-firmware/build/poplar/debug/fip.bin poplar-l-loader/atf/
 	$(MAKE) -C poplar-l-loader clean
 	$(MAKE) -C poplar-l-loader CROSS_COMPILE=${CROSS_32}
 

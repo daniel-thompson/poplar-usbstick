@@ -37,15 +37,15 @@ linaro-stretch-developer.tar.gz :
 # Step 4: Get the source code.
 clone : poplar-l-loader poplar-arm-trusted-firmware poplar-u-boot poplar-linux
 poplar-tools :
-	git clone https://github.com/linaro/poplar-tools.git -b latest
+	git clone https://github.com/96boards-poplar/poplar-tools.git
 poplar-l-loader :
-	git clone https://github.com/linaro/poplar-l-loader.git -b latest
+	git clone https://github.com/96boards-poplar/l-loader.git -b u-boot poplar-l-loader
 poplar-arm-trusted-firmware :
-	git clone https://github.com/linaro/poplar-arm-trusted-firmware.git -b latest
+	git clone https://github.com/96boards-poplar/arm-trusted-firmware
 poplar-u-boot :
-	git clone https://github.com/linaro/poplar-u-boot.git -b latest
+	git clone https://github.com/96boards-poplar/u-boot.git poplar-u-boot
 poplar-linux :
-	git clone https://github.com/linaro/poplar-linux.git -b latest
+	git clone https://github.com/96boards-poplar/linux.git -b poplar-4.9 poplar-linux
 
 CROSS_32=arm-linux-gnueabihf-
 CROSS_64=aarch64-linux-gnu-
@@ -58,15 +58,15 @@ build_uboot :
 
 # Step 2: Build ARM Trusted Firmware components.
 build_armtf : build_uboot
-	$(MAKE) -C poplar-arm-trusted-firmware distclean
-	$(MAKE) -C poplar-arm-trusted-firmware \
+	$(MAKE) -C arm-trusted-firmware distclean
+	$(MAKE) -C arm-trusted-firmware \
 		CROSS_COMPILE=${CROSS_64} all fip DEBUG=1 PLAT=poplar SPD=none \
 		BL33=${PWD}/poplar-u-boot/u-boot.bin
 
 # Step 3: Build "l-loader"
 build_l_loader : build_armtf
-	cp poplar-arm-trusted-firmware/build/poplar/debug/bl1.bin poplar-l-loader/atf/
-	cp poplar-arm-trusted-firmware/build/poplar/debug/fip.bin poplar-l-loader/atf/
+	cp arm-trusted-firmware/build/poplar/debug/bl1.bin poplar-l-loader/atf/
+	cp arm-trusted-firmware/build/poplar/debug/fip.bin poplar-l-loader/atf/
 	$(MAKE) -C poplar-l-loader clean
 	$(MAKE) -C poplar-l-loader CROSS_COMPILE=${CROSS_32}
 
@@ -74,7 +74,6 @@ build_l_loader : build_armtf
 build_linux :
 	$(MAKE) -C poplar-linux ARCH=arm64 CROSS_COMPILE="${CROSS_64}" \
 		poplar_defconfig
-	(cd poplar-linux; scripts/config --disable ANDROID_PARANOID_NETWORK)
 	$(MAKE) -C poplar-linux ARCH=arm64 CROSS_COMPILE="${CROSS_64}" \
 		all -j $(shell nproc)
 

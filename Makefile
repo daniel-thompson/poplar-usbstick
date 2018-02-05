@@ -35,17 +35,17 @@ linaro-stretch-developer.tar.gz :
 
 
 # Step 4: Get the source code.
-clone : poplar-l-loader poplar-arm-trusted-firmware poplar-u-boot poplar-linux
+clone : poplar-l-loader arm-trusted-firmware poplar-u-boot poplar-linux
 poplar-tools :
-	[ -d poplar-tools ] || git clone https://github.com/96boards-poplar/poplar-tools.git
+	git clone https://github.com/96boards-poplar/poplar-tools.git
 poplar-l-loader :
-	[ -d l-loader ] || git clone https://github.com/96boards-poplar/l-loader.git -b u-boot poplar-l-loader
-poplar-arm-trusted-firmware :
-	[ -d arm-trusted-firmware ] || git clone https://github.com/96boards-poplar/arm-trusted-firmware
+	git clone https://github.com/96boards-poplar/l-loader.git -b u-boot poplar-l-loader
+arm-trusted-firmware :
+	git clone https://github.com/96boards-poplar/arm-trusted-firmware
 poplar-u-boot :
-	[ -d u-boot ] || git clone https://github.com/96boards-poplar/u-boot.git poplar-u-boot
+	git clone https://github.com/96boards-poplar/u-boot.git poplar-u-boot
 poplar-linux :
-	[ -d linux ] || git clone https://github.com/96boards-poplar/linux.git -b poplar-4.9 poplar-linux
+	git clone https://github.com/96boards-poplar/linux.git -b poplar-4.9 poplar-linux
 
 CROSS_32=arm-linux-gnueabihf-
 CROSS_64=aarch64-linux-gnu-
